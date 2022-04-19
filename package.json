@@ -1,0 +1,32 @@
+{
+  "name": "hackerpunk-api",
+  "version": "1.0.0",
+  "description": "api for hackerpunk",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gunb0s/hackerpunk-api.git"
+  },
+  "keywords": [
+    "api"
+  ],
+  "author": "gunb0s",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gunb0s/hackerpunk-api/issues"
+  },
+  "homepage": "https://github.com/gunb0s/hackerpunk-api#readme",
+  "devDependencies": {
+    "@types/pluralize": "^0.0.29",
+    "chai": "^4.3.6",
+    "mocha": "^9.2.2",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "pluralize": "^8.0.0"
+  }
+}
