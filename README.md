@@ -1,13 +1,11 @@
-# mypluralize
+# hackerpunk-api
 
-A Node.js module that returns the plural form of any noun
+A Node.js package for hackerpunk project
 
 ## Installation
 
 ```sh
-npm install mypluralize --save
-yarn add mypluralize
-bower install pluralize --save
+npm i --save hackerpunk-api
 ```
 
 ## Usage
@@ -15,35 +13,11 @@ bower install pluralize --save
 ### Javascript
 
 ```javascript
-var pluralise = require("mypluralize");
-var boys = pluralise.getPlural("Boy");
-```
-
-```sh
-Output should be 'Boys'
+const api = require("hackerpunk-api");
 ```
 
 ### TypeScript
 
 ```typescript
-import { getPlural } from "mypluralize";
-console.log(getPlural("Goose"));
-```
-
-```sh
-Output should be 'Geese'
-```
-
-### AMD
-
-```javascript
-define(function (require, exports, module) {
-  var pluralise = require("mypluralize");
-});
-```
-
-## Test
-
-```sh
-npm run test
+import api from "hackerpunk-api";
 ```

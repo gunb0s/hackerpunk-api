@@ -2,10 +2,10 @@ import * as lightwallet from "eth-lightwallet";
 
 /**
  * @method: returns address and privateKey
- * @param pwd string
- * @return: {string, string}
+ * @param {string} pwd user password
+ * @return {Promise} object of address and privateKey
  */
-export function createWallet(pwd: string): any {
+const createWallet = (pwd: string): any => {
   return new Promise((resolve, reject) => {
     let secretSeed: string = lightwallet.keystore.generateRandomSeed();
 
@@ -29,4 +29,6 @@ export function createWallet(pwd: string): any {
       }
     );
   });
-}
+};
+
+export { createWallet };
