@@ -3,9 +3,9 @@ import * as lightwallet from "eth-lightwallet";
 /**
  * @method: returns address and privateKey
  * @param {string} pwd user password
- * @return {Promise} object of address and privateKey
+ * @return {Promise} object of address, privateKey and mnemonic
  */
-const createWallet = (pwd: string): any => {
+const createWallet = (pwd: string): Promise<any> => {
   return new Promise((resolve, reject) => {
     let secretSeed: string = lightwallet.keystore.generateRandomSeed();
 
@@ -24,7 +24,7 @@ const createWallet = (pwd: string): any => {
           let address = ks.getAddresses().toString();
           let privateKey = ks.exportPrivateKey(address, pwDeriveKey);
 
-          resolve({ address, privateKey });
+          resolve({ address, privateKey, mnemonic: secretSeed });
         });
       }
     );
