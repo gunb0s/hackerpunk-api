@@ -10,62 +10,57 @@ $parcel$export(module.exports, "HPA", () => $5bcbc5721fb60e92$export$5878c2c4222
 $parcel$export(module.exports, "setProvider", () => $7c31348715c168e6$export$1572b3eade6662f9);
 $parcel$export(module.exports, "createWallet", () => $c3abceea661ac960$export$41bdf21621ec4e24);
 
-// const ca, abi
 class $8c679179860be35b$export$2f4fd17aff4e7fc {
-    constructor(provider, privateKey, contractAddress, abi){
-        this.provider = provider;
-        this.wallet = new $8zHUo$ethers.ethers.Wallet(privateKey);
-        this.signer = this.wallet.connect(this.provider);
+    constructor(signer, contractAddress, abi){
         this.contractAddress = contractAddress;
         this.abi = abi;
-        this.contractSigner = new $8zHUo$ethers.ethers.Contract(this.contractAddress, this.abi, this.signer);
-        this.contractProvider = new $8zHUo$ethers.ethers.Contract(this.contractAddress, this.abi, this.provider);
+        this.contract = new $8zHUo$ethers.ethers.Contract(this.contractAddress, this.abi, signer);
     }
     /**
-   *
-   * @param address
-   * @returns
-   */ async balanceOf(address) {
-        const result = await this.contractProvider.balanceOf(address);
-        return result;
+   * @method change signer of contract
+   * @param signer
+   */ async changeContractSigner(signer) {
+        this.contract = this.contract.connect(signer);
     }
     /**
-   * @param recipient token minted to
-   * @returns
+   * @method initial minting once, only admin
+   */ async init() {
+        await this.contract.init();
+    }
+    /**
+   * @method set signup token reward, only admin
+   */ async setSignupReward(signupReward) {
+        await this.contract.setSignupReward();
+    }
+    /**
+   * @method set attendacne token reward, only admin
+   */ async setAttendanceReward(attendanceReward) {
+        await this.contract.setAttendanceReward();
+    }
+    /**
+   * @method mint token to reward signup, only minter
+   */ async signupMint(recipient) {
+        await this.contract.signupMint();
+    }
+    /**
+   * @method mint token to reward attendacne, only minter
    */ async attendanceMint(recipient) {
-        const result = await this.contractSigner.attendanceMint(recipient);
-        return result;
+        await this.contract.attendacneMint();
     }
     /**
-   * @method mint at once, since tx fee
-   * @param recipients array token minted to
-   * @returns
+   * @method mint token to reward users at once, only minter
    */ async attendanceMintBatch(recipients) {
-        const result = await this.contractSigner.attendanceMintBatch(recipients);
-        return result;
+        await this.contract.attendanceMintBatch();
     }
     /**
-   * @param donateRecord array of donate record: { from, to, amount }
-   * @returns
-   */ async donateBatch(donateRecord) {
-        const result = await this.contractSigner.donateBatch(donateRecord);
-        return result;
+   * @method check balance of user
+   */ async balanceOf(user) {
+        await this.contract.balanceOf(user);
     }
 }
 
 
-
-// const ca, abi
 class $5bcbc5721fb60e92$export$5878c2c4222e4fe7 {
-    constructor(provider, privateKey, contractAddress, abi){
-        this.provider = provider;
-        this.wallet = new $8zHUo$ethers.ethers.Wallet(privateKey);
-        this.signer = this.wallet.connect(this.provider);
-        this.contractAddress = contractAddress;
-        this.abi = abi;
-        this.contractSigner = new $8zHUo$ethers.ethers.Contract(this.contractAddress, this.abi, this.signer);
-        this.contractProvider = new $8zHUo$ethers.ethers.Contract(this.contractAddress, this.abi, this.provider);
-    }
 }
 
 
@@ -77,6 +72,12 @@ const $7c31348715c168e6$export$1572b3eade6662f9 = (network, provider, key)=>{
         [provider]: key
     };
     return $8zHUo$ethers.ethers.getDefaultProvider(network, options);
+};
+const $7c31348715c168e6$export$e61ca58b6d981800 = (privateKey)=>{
+    return new $8zHUo$ethers.ethers.Wallet(privateKey);
+};
+const $7c31348715c168e6$export$5e413b7d07c04d66 = (wallet, provider)=>{
+    return wallet.connect(provider);
 };
 
 

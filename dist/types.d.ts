@@ -1,45 +1,44 @@
 import { ethers } from "ethers";
 export class HP {
-    provider: ethers.providers.BaseProvider;
-    wallet: ethers.Wallet;
-    signer: ethers.Signer;
-    contractSigner: ethers.Contract;
-    contractProvider: ethers.Contract;
+    contract: ethers.Contract;
     contractAddress: string;
     abi: ethers.ContractInterface;
-    constructor(provider: ethers.providers.BaseProvider, privateKey: ethers.utils.BytesLike, contractAddress: string, abi: ethers.ContractInterface);
+    constructor(signer: ethers.Signer, contractAddress: string, abi: ethers.ContractInterface);
     /**
-     *
-     * @param address
-     * @returns
+     * @method change signer of contract
+     * @param signer
      */
-    balanceOf(address: string): Promise<any>;
+    changeContractSigner(signer: ethers.Signer): Promise<void>;
     /**
-     * @param recipient token minted to
-     * @returns
+     * @method initial minting once, only admin
      */
-    attendanceMint(recipient: string): Promise<any>;
+    init(): Promise<void>;
     /**
-     * @method mint at once, since tx fee
-     * @param recipients array token minted to
-     * @returns
+     * @method set signup token reward, only admin
      */
-    attendanceMintBatch(recipients: string[]): Promise<any>;
+    setSignupReward(signupReward: number): Promise<void>;
     /**
-     * @param donateRecord array of donate record: { from, to, amount }
-     * @returns
+     * @method set attendacne token reward, only admin
      */
-    donateBatch(donateRecord: object[]): Promise<any>;
+    setAttendanceReward(attendanceReward: number): Promise<void>;
+    /**
+     * @method mint token to reward signup, only minter
+     */
+    signupMint(recipient: string): Promise<void>;
+    /**
+     * @method mint token to reward attendacne, only minter
+     */
+    attendanceMint(recipient: string): Promise<void>;
+    /**
+     * @method mint token to reward users at once, only minter
+     */
+    attendanceMintBatch(recipients: string[]): Promise<void>;
+    /**
+     * @method check balance of user
+     */
+    balanceOf(user: string): Promise<void>;
 }
 export class HPA {
-    provider: ethers.providers.BaseProvider;
-    wallet: ethers.Wallet;
-    signer: ethers.Signer;
-    contractSigner: ethers.Contract;
-    contractProvider: ethers.Contract;
-    contractAddress: string;
-    abi: ethers.ContractInterface;
-    constructor(provider: ethers.providers.BaseProvider, privateKey: ethers.utils.BytesLike, contractAddress: string, abi: ethers.ContractInterface);
 }
 /**
  * @param network default mainnet, can be url like http or wss
