@@ -1,4 +1,4 @@
-import { HP } from "./../dist/types.d";
+import { HP } from "../../dist/types";
 import { ethers } from "ethers";
 
 class HPTimeLock {
@@ -75,3 +75,5 @@ class HPTimeLock {
     await this.contract.release(articleId, writer);
   }
 }
+
+export { HPTimeLock };

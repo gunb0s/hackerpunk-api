@@ -15,7 +15,7 @@ npm i --save hackerpunk-api
 ```javascript
 const hackerpunk = require("hackerpunk-api");
 
-// setProvider
+/// setProvider
 const provider = hackperpunk.setProvider(
   "ropsten",
   "alchemy",
@@ -25,7 +25,7 @@ const provider = hackperpunk.setProvider(
 // or
 const provider = hackperpunk.setProvider("https://127.0.0.1:8545");
 
-// donate
+/// donate
 const wallet = hackerpunk.setWallet("[donator privaeKey]");
 const signer = hackerpunk.setSigner(wallet, provider);
 const hp = new hackerpunk.HP(signer, "[contractAddress]", "[abi]");
@@ -35,11 +35,12 @@ const hptl = new hackerpunk.HPTimeLock(
   "[abi]"
 );
 
-hptl.donate(
-  hp,
-  "[articleId]",
-  "[donatorAddress]",
-  "[writerAddress]",
-  "[amount]"
-);
+hptl
+  .donate(hp, "[articleId]", "[donatorAddress]", "[writerAddress]", "[amount]")
+  .then();
+
+/// register External Account
+// grant minter role to EHP Account
+hp.grantMinterRole("[ExternalHP Contract Address]"); // executed by master account
+hp.registerExternal("[serverAccount]", "[fee]"); // can be executed by user
 ```

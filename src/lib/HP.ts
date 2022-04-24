@@ -31,6 +31,13 @@ class HP {
   }
 
   /**
+   * @method enable ExternalHP Contract to mint
+   */
+  async grantMinterRole(contract: string) {
+    await this.contract.grantMinterRole(contract);
+  }
+
+  /**
    * @method set signup token reward, only admin
    */
   async setSignupReward(signupReward: number) {
@@ -68,8 +75,8 @@ class HP {
   /**
    * @method check balance of user
    */
-  async balanceOf(user: string) {
-    await this.contract.balanceOf(user);
+  async balanceOf(user: string): Promise<number> {
+    return await this.contract.balanceOf(user);
   }
 }
 
