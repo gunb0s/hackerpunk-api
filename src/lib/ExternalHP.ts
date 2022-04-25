@@ -23,31 +23,67 @@ class ExternalHP {
     this.contract = this.contract.connect(signer);
   }
 
-  async signupFee(): Promise<number> {
-    return await this.contract.signupFee();
+  /**
+   * @method onlyOwner
+   * @param fee send value of Wei as string or BigInt
+   */
+  async setSignupFee(credentialType: number, fee: string | BigInt) {
+    await this.contract.setSignupFee(credentialType, fee);
+  }
+
+  async signupFee(credentialType: number): Promise<BigInt> {
+    return await this.contract.signupFee(credentialType);
   }
 
   /**
    * @method onlyOwner
    */
   async getAllServerAccounts(): Promise<string[]> {
-    return await this.contract.getAllServerAccounts;
+    return await this.contract.getAllServerAccounts();
   }
 
-  /**
-   * @method onlyOwner
-   */
-  async setSignupFee(fee: number) {
-    await this.contract.setSignupFee(fee);
+  async registerAddress(serverAddress: string) {
+    await this.contract.registerAddress(serverAddress);
   }
 
-  /**
-   * @method External account send transaction fee and get amount of HP token to be registered
-   * @param serverAccount
-   * @param fee signupfee
-   */
-  async registerExternal(serverAccount: string, fee: number) {
-    await this.contract.registerExternal(serverAccount, { from: fee });
+  async isRegistered(serverAddress: string): Promise<boolean> {
+    return await this.contract.isRegistered(serverAddress);
+  }
+
+  async isAuthenticated(serverAddress: string): Promise<boolean> {
+    return await this.contract.isAuthenticated(serverAddress);
+  }
+
+  async checkExternalAuthenticated(
+    serverAddress: string,
+    externalAddress: string
+  ): Promise<boolean> {
+    return await this.contract.checkExternalAuthenticated(
+      serverAddress,
+      externalAddress
+    );
+  }
+
+  async getCredentialType(serverAddress: string): Promise<number> {
+    return await this.contract.getCredentialType(serverAddress);
+  }
+
+  async singupEventListener(
+    serverAddress: string,
+    externalAddress: string,
+    provider: ethers.providers.BaseProvider,
+    callback: ethers.providers.Listener
+  ) {
+    const filter = {
+      address: this.contractAddress,
+      topics: [
+        ethers.utils.id("Signup(address, address)"),
+        ethers.utils.hexZeroPad(serverAddress, 32),
+        ethers.utils.hexZeroPad(externalAddress, 32),
+      ],
+    };
+
+    provider.once(filter, callback);
   }
 }
 

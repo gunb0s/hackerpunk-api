@@ -1,92 +1,26 @@
-var $8zHUo$ethers = require("ethers");
 var $8zHUo$ethlightwallet = require("eth-lightwallet");
+var $8zHUo$ethers = require("ethers");
 
 function $parcel$export(e, n, v, s) {
   Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
 }
 
-$parcel$export(module.exports, "HP", () => $8c679179860be35b$export$2f4fd17aff4e7fc);
-$parcel$export(module.exports, "HPA", () => $5bcbc5721fb60e92$export$5878c2c4222e4fe7);
-$parcel$export(module.exports, "setProvider", () => $7c31348715c168e6$export$1572b3eade6662f9);
-$parcel$export(module.exports, "createWallet", () => $c3abceea661ac960$export$41bdf21621ec4e24);
-
-class $8c679179860be35b$export$2f4fd17aff4e7fc {
-    constructor(signer, contractAddress, abi){
-        this.contractAddress = contractAddress;
-        this.abi = abi;
-        this.contract = new $8zHUo$ethers.ethers.Contract(this.contractAddress, this.abi, signer);
-    }
-    /**
-   * @method change signer of contract
-   * @param signer
-   */ async changeContractSigner(signer) {
-        this.contract = this.contract.connect(signer);
-    }
-    /**
-   * @method initial minting once, only admin
-   */ async init() {
-        await this.contract.init();
-    }
-    /**
-   * @method set signup token reward, only admin
-   */ async setSignupReward(signupReward) {
-        await this.contract.setSignupReward();
-    }
-    /**
-   * @method set attendacne token reward, only admin
-   */ async setAttendanceReward(attendanceReward) {
-        await this.contract.setAttendanceReward();
-    }
-    /**
-   * @method mint token to reward signup, only minter
-   */ async signupMint(recipient) {
-        await this.contract.signupMint();
-    }
-    /**
-   * @method mint token to reward attendacne, only minter
-   */ async attendanceMint(recipient) {
-        await this.contract.attendacneMint();
-    }
-    /**
-   * @method mint token to reward users at once, only minter
-   */ async attendanceMintBatch(recipients) {
-        await this.contract.attendanceMintBatch();
-    }
-    /**
-   * @method check balance of user
-   */ async balanceOf(user) {
-        await this.contract.balanceOf(user);
-    }
-}
-
-
-class $5bcbc5721fb60e92$export$5878c2c4222e4fe7 {
-}
-
-
-
-const $7c31348715c168e6$export$1572b3eade6662f9 = (network, provider, key)=>{
-    if (network === undefined) return $8zHUo$ethers.ethers.getDefaultProvider();
-    if (network.startsWith("wss") || network.startsWith("http")) return $8zHUo$ethers.ethers.getDefaultProvider(network);
-    const options = {
-        [provider]: key
-    };
-    return $8zHUo$ethers.ethers.getDefaultProvider(network, options);
-};
-const $7c31348715c168e6$export$e61ca58b6d981800 = (privateKey)=>{
-    return new $8zHUo$ethers.ethers.Wallet(privateKey);
-};
-const $7c31348715c168e6$export$5e413b7d07c04d66 = (wallet, provider)=>{
-    return wallet.connect(provider);
-};
-
-
+$parcel$export(module.exports, "HP", () => $4f2d27e7bb08be92$export$2f4fd17aff4e7fc);
+$parcel$export(module.exports, "HPTimeLock", () => $c6d12b18f5e7b653$export$948472b202b3236b);
+$parcel$export(module.exports, "ExternalHP", () => $1bdf165e5fb3c2c0$export$7fb3e24a412a5622);
+$parcel$export(module.exports, "setProvider", () => $844002365fcdc02f$export$1572b3eade6662f9);
+$parcel$export(module.exports, "HPA", () => $2dacf9daeccfc13d$export$5878c2c4222e4fe7);
+$parcel$export(module.exports, "PHP", () => $2c5e294af188e6fb$export$75e463e960baeac);
+$parcel$export(module.exports, "HPAStakingSystem", () => $0f2effce3e5d2a70$export$8ee31b378e074166);
+$parcel$export(module.exports, "setWallet", () => $844002365fcdc02f$export$e61ca58b6d981800);
+$parcel$export(module.exports, "setSigner", () => $844002365fcdc02f$export$5e413b7d07c04d66);
+$parcel$export(module.exports, "createWallet", () => $a3136578afa07f27$export$41bdf21621ec4e24);
 
 /**
  * @method: returns address and privateKey
  * @param {string} pwd user password
  * @return {Promise} object of address, privateKey and mnemonic
- */ const $c3abceea661ac960$export$41bdf21621ec4e24 = (pwd)=>{
+ */ const $a3136578afa07f27$export$41bdf21621ec4e24 = (pwd)=>{
     return new Promise((resolve, reject)=>{
         let secretSeed = $8zHUo$ethlightwallet.keystore.generateRandomSeed();
         $8zHUo$ethlightwallet.keystore.createVault({
@@ -108,6 +42,268 @@ const $7c31348715c168e6$export$5e413b7d07c04d66 = (wallet, provider)=>{
             });
         });
     });
+};
+
+
+
+class $4f2d27e7bb08be92$export$2f4fd17aff4e7fc {
+    constructor(signer, contractAddress, abi){
+        this.contractAddress = contractAddress;
+        this.abi = abi;
+        this.contract = new $8zHUo$ethers.ethers.Contract(this.contractAddress, this.abi, signer);
+    }
+    /**
+   * @method change signer of contract
+   * @param signer
+   */ async changeContractSigner(signer) {
+        this.contract = this.contract.connect(signer);
+    }
+    /**
+   * @method initial minting once, only admin
+   */ async init() {
+        await this.contract.init();
+    }
+    /**
+   * @method enable ExternalHP Contract to mint
+   */ async grantMinterRole(contract) {
+        await this.contract.grantMinterRole(contract);
+    }
+    /**
+   * @method set signup token reward, only admin
+   * @param signupReward send value of Wei as string or BigInt
+   */ async setSignupReward(signupReward) {
+        await this.contract.setSignupReward(signupReward);
+    }
+    /**
+   * @method set attendacne token reward, only admin
+   * @param attendanceReward send value of Wei as string or BigInt
+   */ async setAttendanceReward(attendanceReward) {
+        await this.contract.setAttendanceReward(attendanceReward);
+    }
+    /**
+   * @method mint token to reward signup, only minter
+   */ async signupMint(recipient) {
+        await this.contract.signupMint();
+    }
+    /**
+   * @method mint token to reward attendacne, only minter
+   */ async attendanceMint(recipient) {
+        await this.contract.attendacneMint();
+    }
+    /**
+   * @method mint token to reward users at once, only minter
+   */ async attendanceMintBatch(recipients) {
+        await this.contract.attendanceMintBatch();
+    }
+    /**
+   * @method check balance of user
+   */ async balanceOf(user) {
+        return await this.contract.balanceOf(user);
+    }
+    async withdrawToExternalAddress(serverAddressSigner, externalAddress, amount) {
+        await this.changeContractSigner(serverAddressSigner);
+        await this.contract.transfer(externalAddress, amount);
+    }
+}
+
+
+
+class $c6d12b18f5e7b653$export$948472b202b3236b {
+    constructor(signer, contractAddress, abi){
+        this.contractAddress = contractAddress;
+        this.abi = abi;
+        this.contract = new $8zHUo$ethers.ethers.Contract(this.contractAddress, this.abi, signer);
+    }
+    /**
+   * @method change signer of contract
+   * @param signer
+   */ async changeContractSigner(signer) {
+        this.contract = this.contract.connect(signer);
+    }
+    /**
+   * @returns 0: not started, 1: proceeding 2: complete, 3: reverted
+   */ async checkDonationStatus(articleId) {
+        return await this.contract.checkDonationStatus(articleId);
+    }
+    async getDonators(articleId) {
+        return await this.contract.getDonators(articleId);
+    }
+    async getDonationBalance(articleId) {
+        return await this.contract.getDonationBalance(articleId);
+    }
+    /**
+   * @method donator approve donation token to HPTimeLock contract and then, this token locked, only owner
+   * @param hp HP's Contract should be connected to donator's signer
+   * @param amount send value of Wei as string or BigInt
+   */ async donate(hp, articleId, donator, writer, amount) {
+        await hp.contract.approve(this.contract.address, amount);
+        await this.contract.donate(articleId, donator, writer, amount);
+    }
+    /**
+   * @method article removed, all token donated are returned to donators, only owner
+   */ async revokeAll(articleId, writer) {
+        await this.contract.revokeAll(articleId, writer);
+    }
+    /**
+   * @method donator revoke donation and token returned, only owner
+   */ async revokeDonate(articleId, donator) {
+        await this.contract.revokeDonate(articleId, donator);
+    }
+    /**
+   * @method donation token released to writer after lock time, only owner
+   */ async release(articleId, writer) {
+        await this.contract.release(articleId, writer);
+    }
+}
+
+
+
+class $1bdf165e5fb3c2c0$export$7fb3e24a412a5622 {
+    constructor(signer, contractAddress, abi){
+        this.contractAddress = contractAddress;
+        this.abi = abi;
+        this.contract = new $8zHUo$ethers.ethers.Contract(this.contractAddress, this.abi, signer);
+    }
+    /**
+   * @method change signer of contract
+   * @param signer
+   */ async changeContractSigner(signer) {
+        this.contract = this.contract.connect(signer);
+    }
+    /**
+   * @method onlyOwner
+   * @param fee send value of Wei as string or BigInt
+   */ async setSignupFee(credentialType, fee) {
+        await this.contract.setSignupFee(credentialType, fee);
+    }
+    async signupFee(credentialType) {
+        return await this.contract.signupFee(credentialType);
+    }
+    /**
+   * @method onlyOwner
+   */ async getAllServerAccounts() {
+        return await this.contract.getAllServerAccounts();
+    }
+    async registerAddress(serverAddress) {
+        await this.contract.registerAddress(serverAddress);
+    }
+    async isRegistered(serverAddress) {
+        return await this.contract.isRegistered(serverAddress);
+    }
+    async isAuthenticated(serverAddress) {
+        return await this.contract.isAuthenticated(serverAddress);
+    }
+    async checkExternalAuthenticated(serverAddress, externalAddress) {
+        return await this.contract.checkExternalAuthenticated(serverAddress, externalAddress);
+    }
+    async getCredentialType(serverAddress) {
+        return await this.contract.getCredentialType(serverAddress);
+    }
+    async singupEventListener(serverAddress, externalAddress, provider, callback) {
+        const filter = {
+            address: this.contractAddress,
+            topics: [
+                $8zHUo$ethers.ethers.utils.id("Signup(address, address)"),
+                $8zHUo$ethers.ethers.utils.hexZeroPad(serverAddress, 32),
+                $8zHUo$ethers.ethers.utils.hexZeroPad(externalAddress, 32), 
+            ]
+        };
+        provider.once(filter, callback);
+    }
+}
+
+
+
+class $2dacf9daeccfc13d$export$5878c2c4222e4fe7 {
+    constructor(signer, contractAddress, abi){
+        this.contractAddress = contractAddress;
+        this.abi = abi;
+        this.contract = new $8zHUo$ethers.ethers.Contract(this.contractAddress, this.abi, signer);
+    }
+    /**
+   * @method change signer of contract
+   * @param signer
+   */ async changeContractSigner(signer) {
+        this.contract = this.contract.connect(signer);
+    }
+    async safeMint(recipient) {
+        //   const tokenURI =...
+        await this.contract.safeMint(recipient, "");
+    }
+    async ownerOf(tokenId) {
+        return await this.contract.ownerOf(tokenId);
+    }
+    async balanceOf(owner) {
+        return await this.contract.balanceOf(owner);
+    }
+}
+
+
+
+class $2c5e294af188e6fb$export$75e463e960baeac {
+    constructor(signer, contractAddress, abi){
+        this.contractAddress = contractAddress;
+        this.abi = abi;
+        this.contract = new $8zHUo$ethers.ethers.Contract(this.contractAddress, this.abi, signer);
+    }
+    /**
+   * @method change signer of contract
+   * @param signer
+   */ async changeContractSigner(signer) {
+        this.contract = this.contract.connect(signer);
+    }
+    async balanceOf(owner) {
+        return await this.contract.balanceOf(owner);
+    }
+}
+
+
+
+class $0f2effce3e5d2a70$export$8ee31b378e074166 {
+    constructor(signer, contractAddress, abi){
+        this.contractAddress = contractAddress;
+        this.abi = abi;
+        this.contract = new $8zHUo$ethers.ethers.Contract(this.contractAddress, this.abi, signer);
+    }
+    /**
+   * @method change signer of contract
+   * @param signer
+   */ async changeContractSigner(signer) {
+        this.contract = this.contract.connect(signer);
+    }
+    async stake(hpa, tokenId) {
+        await hpa.contract.approve(this.contractAddress, tokenId);
+        await this.contract.stake(tokenId);
+    }
+    async updateReward() {
+        await this.contract.updateReward();
+    }
+    async claimReward(owner) {
+        await this.contract.claimReward(owner);
+    }
+    async unstake(tokenId) {
+        await this.contract.unstake(tokenId);
+    }
+}
+
+
+
+const $844002365fcdc02f$export$1572b3eade6662f9 = (network, provider, key)=>{
+    let options;
+    if (provider !== undefined) options = {
+        [provider]: key
+    };
+    if (network === undefined) return $8zHUo$ethers.ethers.getDefaultProvider("homestead", options);
+    else {
+        if (network.startsWith("wss") || network.startsWith("http")) return $8zHUo$ethers.ethers.getDefaultProvider(network);
+        else return $8zHUo$ethers.ethers.getDefaultProvider(network, options);
+    }
+};
+const $844002365fcdc02f$export$e61ca58b6d981800 = (privateKey)=>{
+    return new $8zHUo$ethers.ethers.Wallet(privateKey);
+};
+const $844002365fcdc02f$export$5e413b7d07c04d66 = (wallet, provider)=>{
+    return wallet.connect(provider);
 };
 
 
