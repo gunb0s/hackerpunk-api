@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { HP as _HP1, HPA as _HPA1 } from "../../dist/types";
+import { HPTimeLock as _HPTimeLock1 } from "../../dist/types.d";
 /**
  * @method: returns address and privateKey
  * @param {string} pwd user password
@@ -87,6 +88,9 @@ export class HPTimeLock {
      */
     release(articleId: number, writer: string): Promise<void>;
 }
+export class PHPTimeLock extends _HPTimeLock1 {
+    constructor(signer: ethers.Signer, contractAddress: string, abi: ethers.ContractInterface);
+}
 export class ExternalHP {
     contract: ethers.Contract;
     contractAddress: string;
@@ -106,13 +110,13 @@ export class ExternalHP {
     /**
      * @method onlyOwner
      */
-    getAllServerAccounts(): Promise<string[]>;
-    registerAddress(serverAddress: string): Promise<void>;
-    isRegistered(serverAddress: string): Promise<boolean>;
-    isAuthenticated(serverAddress: string): Promise<boolean>;
-    checkExternalAuthenticated(serverAddress: string, externalAddress: string): Promise<boolean>;
-    getCredentialType(serverAddress: string): Promise<number>;
-    singupEventListener(serverAddress: string, externalAddress: string, provider: ethers.providers.BaseProvider, callback: ethers.providers.Listener): Promise<void>;
+    getAllInternalAddresses(): Promise<string[]>;
+    registerAddress(internalAddress: string): Promise<void>;
+    isRegistered(internalAddress: string): Promise<boolean>;
+    isAuthenticated(internalAddress: string): Promise<boolean>;
+    checkExternalAuthenticated(internalAddress: string, externalAddress: string): Promise<boolean>;
+    getCredentialType(internalAddress: string): Promise<number>;
+    singupEventListener(internalAddress: string, externalAddress: string, provider: ethers.providers.BaseProvider, callback: ethers.providers.Listener): Promise<void>;
 }
 export class HPA {
     contract: ethers.Contract;

@@ -38,38 +38,38 @@ class ExternalHP {
   /**
    * @method onlyOwner
    */
-  async getAllServerAccounts(): Promise<string[]> {
-    return await this.contract.getAllServerAccounts();
+  async getAllInternalAddresses(): Promise<string[]> {
+    return await this.contract.getAllInternalAddresses();
   }
 
-  async registerAddress(serverAddress: string) {
-    await this.contract.registerAddress(serverAddress);
+  async registerAddress(internalAddress: string) {
+    await this.contract.registerAddress(internalAddress);
   }
 
-  async isRegistered(serverAddress: string): Promise<boolean> {
-    return await this.contract.isRegistered(serverAddress);
+  async isRegistered(internalAddress: string): Promise<boolean> {
+    return await this.contract.isRegistered(internalAddress);
   }
 
-  async isAuthenticated(serverAddress: string): Promise<boolean> {
-    return await this.contract.isAuthenticated(serverAddress);
+  async isAuthenticated(internalAddress: string): Promise<boolean> {
+    return await this.contract.isAuthenticated(internalAddress);
   }
 
   async checkExternalAuthenticated(
-    serverAddress: string,
+    internalAddress: string,
     externalAddress: string
   ): Promise<boolean> {
     return await this.contract.checkExternalAuthenticated(
-      serverAddress,
+      internalAddress,
       externalAddress
     );
   }
 
-  async getCredentialType(serverAddress: string): Promise<number> {
-    return await this.contract.getCredentialType(serverAddress);
+  async getCredentialType(internalAddress: string): Promise<number> {
+    return await this.contract.getCredentialType(internalAddress);
   }
 
   async singupEventListener(
-    serverAddress: string,
+    internalAddress: string,
     externalAddress: string,
     provider: ethers.providers.BaseProvider,
     callback: ethers.providers.Listener
@@ -78,7 +78,7 @@ class ExternalHP {
       address: this.contractAddress,
       topics: [
         ethers.utils.id("Signup(address, address)"),
-        ethers.utils.hexZeroPad(serverAddress, 32),
+        ethers.utils.hexZeroPad(internalAddress, 32),
         ethers.utils.hexZeroPad(externalAddress, 32),
       ],
     };
