@@ -67,12 +67,13 @@ export class HPTimeLock {
     checkDonationStatus(articleId: number): Promise<number>;
     getDonators(articleId: number): Promise<string[]>;
     getDonationBalance(articleId: number): Promise<BigInt>;
+    writeArticle(articleId: number, writer: string): Promise<void>;
     /**
      * @method donator approve donation token to HPTimeLock contract and then, this token locked, only owner
      * @param hp HP's Contract should be connected to donator's signer
      * @param amount send value of Wei as string or BigInt
      */
-    donate(hp: HP, articleId: number, donator: string, writer: string, amount: string | BigInt): Promise<void>;
+    donate(hp: HP, articleId: number, donator: string, amount: string | BigInt): Promise<void>;
     /**
      * @method article removed, all token donated are returned to donators, only owner
      */
@@ -114,6 +115,9 @@ export class ExternalHP {
     isAuthenticated(internalAddress: string): Promise<boolean | Error>;
     checkExternalAuthenticated(internalAddress: string, externalAddress: string): Promise<boolean | Error>;
     getCredentialType(internalAddress: string): Promise<number | Error>;
+    /**
+     * @param provider url
+     */
     getSignature(provider: string, internalAddress: string, privateKey: string): Promise<any>;
     singupEventListener(callback: ethers.providers.Listener): Promise<void>;
 }

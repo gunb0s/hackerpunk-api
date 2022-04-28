@@ -104,6 +104,9 @@ class ExternalHP {
     }
   }
 
+  /**
+   * @param provider url
+   */
   async getSignature(
     provider: string,
     internalAddress: string,
